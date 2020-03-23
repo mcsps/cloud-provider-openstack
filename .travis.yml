@@ -7,10 +7,16 @@ language: go
 env:
   - GO111MODULE=on
 
+do:
+  - 1.14.x
+
 addons:
   apt:
     packages:
       - docker.io
+
+services:
+  - docker
 
 script:
   - go version
