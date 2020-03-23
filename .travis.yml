@@ -14,6 +14,4 @@ install:
 script:
   - go version
   - go mod edit --replace github.com/gophercloud/gophercloud=github.com/mcsps/gophercloud@91a789f0d1566e938d4ec343bb4ffe0fcf597b47
-  - mkdir -p /go/src/k8s.io
-  - cp -r /builds/mcsps/cloud-provider-openstack /go/src/k8s.io/cloud-provider-openstack
-  - cd /go/src/k8s.io/cloud-provider-openstack
+  - make image-controller-manager
