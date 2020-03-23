@@ -4,8 +4,10 @@ dist: bionic
 
 language: go
 
-install:
-  - apt update && apt install -y docker.io
+addons:
+  apt:
+    packages:
+      - docker.io
 
 script:
   - go version
