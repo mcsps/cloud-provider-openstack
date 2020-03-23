@@ -26,4 +26,5 @@ script:
   - go mod edit --replace github.com/gophercloud/gophercloud=github.com/mcsps/gophercloud@91a789f0d1566e938d4ec343bb4ffe0fcf597b47
   - make image-controller-manager
   - docker images
-#  - docker push mcsps/cloud-provider-opentelekomcloud:tagname
+#  - docker tag k8scloudprovider/openstack-cloud-controller-manager
+  - docker push mcsps/cloud-provider-opentelekomcloud:latest
