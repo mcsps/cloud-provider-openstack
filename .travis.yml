@@ -31,6 +31,6 @@ script:
   - docker push mcsps/cloud-provider-opentelekomcloud:1.19
   - make image-cinder-csi-plugin
   - docker images
-  - docker tag k8scloudprovider/cinder-csi-plugin:${TAG}-dirty mcsps/cinder-csi-plugin:1.19
+  - docker tag k8scloudprovider/cinder-csi-plugin-amd64:${TAG}-dirty mcsps/cinder-csi-plugin:1.19
   - docker push mcsps/cinder-csi-plugin:1.19
 
