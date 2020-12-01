@@ -1135,7 +1135,7 @@ func (lbaas *LbaasV2) ensureOctaviaListener(lbID string, oldListeners []listener
 				klog.V(4).Infof("Forcing to use %q protocol for listener because %q annotation is set", listeners.ProtocolHTTP, ServiceAnnotationLoadBalancerXForwardedFor)
 				listenerCreateOpt.Protocol = listeners.ProtocolHTTP
 			}
-			listenerCreateOpt.InsertHeaders = map[string]string{annotationXForwardedFor: "true"}
+			// listenerCreateOpt.InsertHeaders = map[string]string{annotationXForwardedFor: "true"}
 		}
 
 		if len(svcConf.allowedCIDR) > 0 {
@@ -1159,6 +1159,7 @@ func (lbaas *LbaasV2) ensureOctaviaListener(lbID string, oldListeners []listener
 			updateOpts.ConnLimit = &svcConf.connLimit
 			listenerChanged = true
 		}
+/*
 		updateOpts.InsertHeaders = &listener.InsertHeaders
 		listenerKeepClientIP := listener.InsertHeaders[annotationXForwardedFor] == "true"
 		if svcConf.keepClientIP != listenerKeepClientIP {
@@ -1169,6 +1170,7 @@ func (lbaas *LbaasV2) ensureOctaviaListener(lbID string, oldListeners []listener
 			}
 			listenerChanged = true
 		}
+*/
 		if openstackutil.IsOctaviaFeatureSupported(lbaas.lb, openstackutil.OctaviaFeatureTimeout) {
 			if svcConf.timeoutClientData != listener.TimeoutClientData {
 				updateOpts.TimeoutClientData = &svcConf.timeoutClientData
@@ -1665,7 +1667,7 @@ func (lbaas *LbaasV2) EnsureLoadBalancer(ctx context.Context, clusterName string
 							"annotation is set", listeners.ProtocolHTTP, ServiceAnnotationLoadBalancerXForwardedFor)
 						listenerCreateOpt.Protocol = listeners.ProtocolHTTP
 					}
-					listenerCreateOpt.InsertHeaders = map[string]string{"X-Forwarded-For": "true"}
+					//listenerCreateOpt.InsertHeaders = map[string]string{"X-Forwarded-For": "true"}
 				}
 
 				listenerCreateOpt.TimeoutClientData = &timeoutClientData
@@ -1961,7 +1963,7 @@ func (lbaas *LbaasV2) EnsureLoadBalancer(ctx context.Context, clusterName string
 				floatIPOpts := floatingips.CreateOpts{
 					FloatingNetworkID: floatingNetworkID,
 					PortID:            portID,
-					Description:       fmt.Sprintf("Floating IP for Kubernetes external service %s from cluster %s", serviceName, clusterName),
+					// Description:       fmt.Sprintf("Floating IP for Kubernetes external service %s from cluster %s", serviceName, clusterName),
 				}
 
 				if floatingSubnetID != "" {

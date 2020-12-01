@@ -1,0 +1,36 @@
+---
+sudo: required
+dist: bionic
+
+language: go
+
+env:
+  - GO111MODULE=on
+
+go:
+  - 1.14.x
+
+addons:
+  apt:
+    packages:
+      - docker.io
+
+services:
+  - docker
+
+script:
+  - sudo systemctl unmask docker
+  - sudo systemctl start docker
+  - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
+  - TAG=`git describe --match=$(git rev-parse --short=8 HEAD) --always --dirty --abbrev=8`
+  - go version
+  - go mod edit --replace github.com/gophercloud/gophercloud=github.com/mcsps/gophercloud@e9621d586645ac903f74ddddaf1d342f5bed6a0c
+  - make image-controller-manager
+  - docker images
+  - docker tag k8scloudprovider/openstack-cloud-controller-manager:${TAG}-dirty mcsps/cloud-provider-opentelekomcloud:1.19
+  - docker push mcsps/cloud-provider-opentelekomcloud:1.19
+  - make image-cinder-csi-plugin
+  - docker images
+  - docker tag k8scloudprovider/cinder-csi-plugin:${TAG}-dirty mcsps/cinder-csi-plugin:1.19
+  - docker push mcsps/cinder-csi-plugin:1.19
+
