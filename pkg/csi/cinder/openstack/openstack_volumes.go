@@ -66,6 +66,7 @@ func (os *OpenStack) CreateVolume(name string, size int, vtype, availability str
 		VolumeType:       vtype,
 		AvailabilityZone: availability,
 		Description:      volumeDescription,
+                Multiattach:      true,
 		SnapshotID:       snapshotID,
 		SourceVolID:      sourcevolID,
 	}
