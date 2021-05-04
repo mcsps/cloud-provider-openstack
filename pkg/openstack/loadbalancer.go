@@ -1489,6 +1489,7 @@ func (lbaas *LbaasV2) ensureOctaviaListener(lbID string, oldListeners []listener
 			listenerChanged = true
 		}
 
+		/*
 		listenerKeepClientIP := listener.InsertHeaders[annotationXForwardedFor] == "true"
 		if svcConf.keepClientIP != listenerKeepClientIP {
 			updateOpts.InsertHeaders = &listener.InsertHeaders
@@ -1502,6 +1503,7 @@ func (lbaas *LbaasV2) ensureOctaviaListener(lbID string, oldListeners []listener
 			}
 			listenerChanged = true
 		}
+		*/
 		if svcConf.tlsContainerRef != listener.DefaultTlsContainerRef {
 			updateOpts.DefaultTlsContainerRef = &svcConf.tlsContainerRef
 			listenerChanged = true
@@ -1558,11 +1560,11 @@ func (lbaas *LbaasV2) buildListenerCreateOpt(port corev1.ServicePort, svcConf *s
 		listenerCreateOpt.TimeoutMemberData = &svcConf.timeoutMemberData
 		listenerCreateOpt.TimeoutTCPInspect = &svcConf.timeoutTCPInspect
 	}
-
+	/*
 	if svcConf.keepClientIP {
 		listenerCreateOpt.InsertHeaders = map[string]string{annotationXForwardedFor: "true"}
 	}
-
+	*/
 	if svcConf.tlsContainerRef != "" {
 		listenerCreateOpt.DefaultTlsContainerRef = svcConf.tlsContainerRef
 	}
@@ -2096,6 +2098,7 @@ func (lbaas *LbaasV2) ensureLoadBalancer(ctx context.Context, clusterName string
 			}
 
 			if lbaas.opts.UseOctavia {
+				/*
 				if keepClientIP {
 					if listenerCreateOpt.Protocol != listeners.ProtocolHTTP {
 						klog.V(4).Infof("Forcing to use %q protocol for listener because %q "+
@@ -2104,6 +2107,7 @@ func (lbaas *LbaasV2) ensureLoadBalancer(ctx context.Context, clusterName string
 					}
 					listenerCreateOpt.InsertHeaders = map[string]string{"X-Forwarded-For": "true"}
 				}
+				*/
 
 				listenerCreateOpt.TimeoutClientData = &timeoutClientData
 				listenerCreateOpt.TimeoutMemberData = &timeoutMemberData
@@ -2424,7 +2428,7 @@ func (lbaas *LbaasV2) ensureLoadBalancer(ctx context.Context, clusterName string
 				floatIPOpts := floatingips.CreateOpts{
 					FloatingNetworkID: floatingNetworkID,
 					PortID:            portID,
-					Description:       fmt.Sprintf("Floating IP for Kubernetes external service %s from cluster %s", serviceName, clusterName),
+					// Description:       fmt.Sprintf("Floating IP for Kubernetes external service %s from cluster %s", serviceName, clusterName),
 				}
 
 				if floatingSubnetID != "" {
