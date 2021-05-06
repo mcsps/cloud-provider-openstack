@@ -33,4 +33,3 @@ script:
   - docker images
   - docker tag k8scloudprovider/cinder-csi-plugin-amd64:${TAG}-dirty mcsps/cinder-csi-plugin:1.21
   - docker push mcsps/cinder-csi-plugin:1.21
-
